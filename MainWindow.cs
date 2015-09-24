@@ -12,7 +12,7 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		Gdk.PixbufAnimation animation = Gdk.PixbufAnimation.LoadFromResource ("FxPicasaDownloader.loading.gif");
+		Gdk.PixbufAnimation animation = Gdk.PixbufAnimation.LoadFromResource ("FxPicasaWebAlbumDownloader.loading.gif");
 		albumList.Sensitive = false;
 		downloadButton.Sensitive = false;
 		imageLoading.Animation = animation;
