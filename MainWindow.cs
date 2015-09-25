@@ -78,6 +78,8 @@ public partial class MainWindow: Gtk.Window
 			var nodes = root.SelectNodes ("/Atom:feed/Atom:entry", nsmgr);
 			ShowLogging ("Found {0} albums", nodes.Count);
 
+			listStore.AppendValues (null, "<All albums>");
+
 			foreach (XmlNode albumXml in nodes) {
 				//string id = albumXml.SelectSingleNode ("./Atom:id", nsmgr).InnerText;
 				string title = albumXml.SelectSingleNode ("./Atom:title", nsmgr).InnerText;
@@ -97,6 +99,9 @@ public partial class MainWindow: Gtk.Window
 				albumList.PackStart (text, false);
 				albumList.AddAttribute (text, "text", 1); 
 				albumList.Sensitive = true;
+				TreeIter iter;
+				albumList.Model.GetIterFirst (out iter);
+				albumList.SetActiveIter (iter);
 				downloadButton.Sensitive = true;
 			});
 		} catch (Exception x) {
