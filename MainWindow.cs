@@ -1,11 +1,9 @@
 ﻿using System;
-using Gtk;
-using System.Net;
 using System.IO;
-using System.Xml;
-using System.Xml.Linq;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Xml;
+using Gtk;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -15,10 +13,12 @@ public partial class MainWindow: Gtk.Window
 		Gdk.PixbufAnimation animation = Gdk.PixbufAnimation.LoadFromResource ("FxPicasaWebAlbumDownloader.loading.gif");
 		albumList.Sensitive = false;
 		downloadButton.Sensitive = false;
+		selectDestinationFolder.Sensitive = false;
 		imageLoading.Animation = animation;
 		imageLoading.Visible = false;
 		progressBar.Visible = false;
-		this.FocusChain = new Widget[] { albumUser, checkAlbumsButton, albumList, downloadButton };
+		selectDestinationFolder.SetCurrentFolder (Environment.GetFolderPath (Environment.SpecialFolder.MyPictures));
+		this.FocusChain = new Widget[] { albumUser, checkAlbumsButton, albumList, downloadButton, selectDestinationFolder };
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -47,7 +47,6 @@ public partial class MainWindow: Gtk.Window
 
 	protected async void OnCheckAlbumsButtonClicked (object sender, EventArgs e)
 	{
-		
 		try {
 			Gtk.Application.Invoke (delegate {
 				imageLoading.Visible = true;
@@ -103,6 +102,7 @@ public partial class MainWindow: Gtk.Window
 				albumList.Model.GetIterFirst (out iter);
 				albumList.SetActiveIter (iter);
 				downloadButton.Sensitive = true;
+				selectDestinationFolder.Sensitive = true;
 			});
 		} catch (Exception x) {
 			ShowLogging ("Exception happened: {0}", x);
@@ -177,7 +177,10 @@ public partial class MainWindow: Gtk.Window
 			nsmgr.AddNamespace ("media", "http://search.yahoo.com/mrss/");
 			nsmgr.AddNamespace ("exif", "http://schemas.google.com/photos/exif/2007");
 
-			string targetDirectory = "/tmp/test";
+			string targetDirectory = selectDestinationFolder.CurrentFolder;
+			if (!System.IO.Directory.Exists (targetDirectory))
+				System.IO.Directory.CreateDirectory (targetDirectory);
+			targetDirectory = System.IO.Path.Combine (targetDirectory, albumUser.Text);
 			if (!System.IO.Directory.Exists (targetDirectory))
 				System.IO.Directory.CreateDirectory (targetDirectory);
 			string albumPath = System.IO.Path.Combine (targetDirectory, title);
@@ -191,6 +194,7 @@ public partial class MainWindow: Gtk.Window
 			var nodes = root.SelectNodes ("/Atom:feed/Atom:entry", nsmgr);
 			int totalCount = nodes.Count;
 			ShowLogging ("Found {0} photos", totalCount);
+			ShowLogging ("Saving to {0}", albumPath);
 			int current = 0;
 			foreach (XmlNode albumXml in nodes) {
 				//string id = albumXml.SelectSingleNode ("./Atom:id", nsmgr).InnerText;

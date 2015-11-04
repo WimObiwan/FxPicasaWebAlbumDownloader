@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{2C908CB4-F3C8-4E28-80E0-60C8943BF574}</ProjectGuid>
+    <ProjectGuid>{4C29FE6D-049B-43A4-A37A-689B8F2F0E76}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>FxPicasaWebAlbumDownloader</RootNamespace>
     <AssemblyName>FxPicasaWebAlbumDownloader</AssemblyName>
@@ -55,11 +55,8 @@
       <SpecificVersion>False</SpecificVersion>
       <Package>gtk-sharp-2.0</Package>
     </Reference>
+    <Reference Include="Mono.Posix" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Mono.Posix">
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -69,9 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="MainWindow.cs" />
+    <Compile Include="gtk-gui\MainWindow.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="Picasa.ico" />
+  </ItemGroup>
 </Project>
