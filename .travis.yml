@@ -11,5 +11,5 @@ before_install:
 - mozroots --import --sync --quiet
 
 script:
- - xbuild /p:TargetFrameworkProfile="" /p:Configuration=Release ./FxPicasaWebAlbumDownloader/FxPicasaWebAlbumDownloader.sln
+ - xbuild /p:TargetFrameworkProfile="" /p:Configuration=Release ./FxPicasaWebAlbumDownloader.sln
  - #./FxPicasaWebAlbumDownloader/BuildScript/test.sh
