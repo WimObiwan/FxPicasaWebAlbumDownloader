@@ -12,4 +12,4 @@ before_install:
 
 script:
  - xbuild /p:TargetFrameworkProfile="" /p:Configuration=Release ./FxPicasaWebAlbumDownloader/FxPicasaWebAlbumDownloader.sln
- - #./FxGql/BuildScript/test.sh
+ - #./FxPicasaWebAlbumDownloader/BuildScript/test.sh
