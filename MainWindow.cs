@@ -18,6 +18,7 @@ public partial class MainWindow: Gtk.Window
 		imageLoading.Visible = false;
 		progressBar.Visible = false;
 		selectDestinationFolder.SetCurrentFolder (Environment.GetFolderPath (Environment.SpecialFolder.MyPictures));
+		this.Title += " (v" + System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version.ToString () + ")";
 		this.FocusChain = new Widget[] { albumUser, checkAlbumsButton, albumList, downloadButton, selectDestinationFolder };
 	}
 
