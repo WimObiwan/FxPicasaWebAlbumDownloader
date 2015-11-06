@@ -1,6 +1,7 @@
 language: c
 
 os: linux
+sudo: required
 
 #sudo: false
 #dist: trusty NO SUPPORT YET FOR CONTAINERS
